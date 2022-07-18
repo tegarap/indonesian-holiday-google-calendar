@@ -32,5 +32,21 @@ func main() {
 		return
 	}
 
-	fmt.Println(string(body))
+	err = saveResponseAsFile(body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+
+func saveResponseAsFile(data []byte) error {
+	f, err := os.Create("holidays.txt")
+	if err != nil {
+		return err
+	}
+
+	defer f.Close()
+	_, err = f.Write(data)
+
+	return err
 }
